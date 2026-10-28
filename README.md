@@ -1,6 +1,6 @@
 🌐 Live Demo
 
-Live Website: https://manyashrivastava.github.io/altrotech-website/-here
+Live Website: https://manyashrivastava.github.io/altrotech-website/
 
 ⚡ ALTROTECH — Power Conversion & Electronics Website
 A responsive corporate and product showcase website for ALTROTECH, designed to present power-conversion solutions and provide a simple e-commerce-style browsing experience. The interface includes company information, product listings, a shopping cart, account screens, payment options, and a contact section.
