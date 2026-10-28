@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Preview - AltroTech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+            color: #e0e0e0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #d4af37;
+            margin-bottom: 40px;
+            font-size: 32px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, #1a1f2e 0%, #242b3d 100%);
+            border: 1px solid #3a4456;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+            box-shadow: 0 12px 48px rgba(212, 175, 55, 0.2);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #d4af37;
+            color: #0f1419;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            z-index: 10;
+        }
+
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #2a2f3e 0%, #1a1f2e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image-container img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            padding: 15px;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 10px;
+            min-height: 40px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #a0a0a0;
+        }
+
+        .stars {
+            color: #d4af37;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+
+        .product-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37 0%, #e5c158 100%);
+            color: #0f1419;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+        }
+
+        .btn-secondary:hover {
+            background: #d4af37;
+            color: #0f1419;
+        }
+
+        .category-label {
+            display: inline-block;
+            background: #3a4456;
+            color: #a0a0a0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+
+        .preview-note {
+            text-align: center;
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="preview-note">✨ LIVE PREVIEW - Product Display with Images ✨</div>
+        <h1>AltroTech - Products Catalog</h1>
+        
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-badge">Featured</div>
+                <div class="product-image-container">
+                    <img src="photo_png_1.jpeg" alt="MORNSUN Power Module">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">MORNSUN Power Module (URB2412D-60WHR3)</div>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span>(4.9 / 156 reviews)</span>
+                    </div>
+                    <div class="product-price">$85.00</div>
+                    <div class="product-buttons">
+                        <button class="btn btn-primary">Add to Cart 🛒</button>
+                        <button class="btn btn-secondary">ℹ️</button>
+                    </div>
+                    <div class="category-label">Industrial Units</div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-badge">Premium</div>
+                <div class="product-image-container">
+                    <img src="photo_png_2.jpeg" alt="MORNSUN Converter Module">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">MORNSUN Converter Module</div>
+                    <div class="product-rating">
+                        <span class="stars">★★★★☆</span>
+                        <span>(4.8 / 89 reviews)</span>
+                    </div>
+                    <div class="product-price">$72.00</div>
+                    <div class="product-buttons">
+                        <button class="btn btn-primary">Add to Cart 🛒</button>
+                        <button class="btn btn-secondary">ℹ️</button>
+                    </div>
+                    <div class="category-label">DC/DC Converters</div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-badge">Industrial</div>
+                <div class="product-image-container">
+                    <img src="photo_png_3.jpeg" alt="MORNSUN Isolated Unit">
+                </div>
+                <div class="product-info">
+                    <div class="product-name">MORNSUN Isolated Unit</div>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span>(4.9 / 142 reviews)</span>
+                    </div>
+                    <div class="product-price">$78.00</div>
+                    <div class="product-buttons">
+                        <button class="btn btn-primary">Add to Cart 🛒</button>
+                        <button class="btn btn-secondary">ℹ️</button>
+                    </div>
+                    <div class="category-label">Industrial Units</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 30px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; margin-top: 30px;">
+            <h3 style="color: #d4af37; margin-bottom: 10px;">✅ All 3 Products Successfully Added!</h3>
+            <p style="color: #a0a0a0;">Images are now integrated into your product catalog.</p>
+        </div>
+    </div>
+</body>
+</html>

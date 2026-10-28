@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AltroTech - Power Conversion Solutions</title>
+    <link rel="stylesheet" href="altrotech-website.css">
+</head>
+<body>
+    <!-- Header with Glassmorphism -->
+    <header>
+        <div class="header-container">
+            <div class="logo">AltroTech</div>
+            <nav id="mainNav">
+                <a href="#" onclick="showPage('home')" class="nav-link active">Home</a>
+                <a href="#" onclick="showPage('about')" class="nav-link">About</a>
+                <a href="#" onclick="showPage('products')" class="nav-link">Products</a>
+                <a href="#" onclick="showPage('payment')" class="nav-link">Payment</a>
+<a href="#" onclick="showPage('contact')" class="nav-link">Contact</a>
+                </nav>
+                <div class="header-actions">
+                <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</div>
+                <div class="cart-icon" onclick="toggleCart()" title="Shopping Cart">
+                    🛒
+                    <div class="cart-count" id="cartCount" style="display: none;">0</div>
+                </div>
+                <div class="user-avatar" onclick="toggleUserDropdown()" title="User Profile">
+                    👤
+                </div>
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="user-profile-info" id="userProfileInfo" style="display: none;">
+                        <div class="avatar-large">👤</div>
+                        <h4 id="userName">User Name</h4>
+                        <p id="userEmail">user@example.com</p>
+                    </div>
+                    <div id="authOptions">
+                        <ul class="user-dropdown-menu">
+                            <li><a onclick="openAuthModal()">Sign In / Sign Up</a></li>
+                        </ul>
+                    </div>
+                    <div id="userOptions" style="display: none;">
+                        <ul class="user-dropdown-menu">
+                            <li><a onclick="goToAccount()">My Account</a></li>
+                            <li><a onclick="goToOrders()">My Orders</a></li>
+                            <li><a class="logout-btn" onclick="logout()">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            My Cart
+            <span class="cart-close" onclick="toggleCart()">✕</span>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty">Your cart is empty</div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotalPrice">$0</span>
+            </div>
+            <button class="cart-checkout" onclick="proceedToCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Authentication Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+                <h2 style="text-align: center; margin-bottom: 30px; color: var(--royal-gold);">Welcome Back</h2>
+                
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" name="email" required placeholder="your@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" required placeholder="Enter your password">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                        <input type="checkbox" style="margin-right: 8px;">
+                        Remember me
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">Sign In</button>
+                
+                <p style="text-align: center; color: var(--text-light); font-size: 14px;">
+                    <a href="#" onclick="switchAuthTab('signup'); return false;" style="color: var(--royal-gold); text-decoration: none;">Don't have an account? Sign up</a>
+                </p>
+            </form>
+
+            <!-- Signup Form -->
+            <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)">
+                <h2 style="text-align: center; margin-bottom: 30px; color: var(--royal-gold);">Create Account</h2>
+                
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" name="name" required placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" name="email" required placeholder="your@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPhone">Phone Number</label>
+                    <input type="tel" id="signupPhone" name="phone" placeholder="+91 98765 43210">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" required placeholder="Create a strong password">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                        <input type="checkbox" required style="margin-right: 8px;">
+                        I agree to the Terms & Conditions
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 15px;">Create Account</button>
+                
+                <p style="text-align: center; color: var(--text-light); font-size: 14px;">
+                    <a href="#" onclick="switchAuthTab('login'); return false;" style="color: var(--royal-gold); text-decoration: none;">Already have an account? Sign in</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closePaymentModal()">&times;</span>
+            <h2>Secure Payment</h2>
+            
+            <div class="form-group">
+                <label>Product: <strong id="productName"></strong></label>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <h3 style="margin-bottom: 20px; font-size: 18px;">Select Payment Method</h3>
+                <div class="payment-grid" style="max-width: none;">
+                    <div class="payment-option" onclick="selectPaymentMethod('stripe')" style="background: white; color: var(--text-dark); border: 2px solid var(--border-color); cursor: pointer;">
+                        <div class="payment-option-icon">💳</div>
+                        <h3>Credit/Debit Card</h3>
+                        <p>Secure payment via Stripe</p>
+                    </div>
+                    <div class="payment-option" onclick="selectPaymentMethod('razorpay')" style="background: white; color: var(--text-dark); border: 2px solid var(--border-color); cursor: pointer;">
+                        <div class="payment-option-icon">🏦</div>
+                        <h3>UPI/Bank Transfer</h3>
+                        <p>Indian payment methods</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="stripePayment" style="display: none;">
+                <div class="form-group">
+                    <label for="cardName">Full Name</label>
+                    <input type="text" id="cardName" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" id="cardNumber" placeholder="4111 1111 1111 1111" maxlength="19">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label for="expiry">Expiry Date</label>
+                        <input type="text" id="expiry" placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="processStripePayment()">Pay Securely</button>
+            </div>
+
+            <div id="razorpayPayment" style="display: none;">
+                <div class="form-group">
+                    <label for="razorpayName">Full Name</label>
+                    <input type="text" id="razorpayName" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="razorpayEmail">Email</label>
+                    <input type="email" id="razorpayEmail" placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="razorpayPhone">Phone</label>
+                    <input type="tel" id="razorpayPhone" placeholder="+91 98765 43210">
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="processRazorpayPayment()">Proceed to Pay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <div id="home" class="page active">
+<div class="hero">
+                <div id="particles-container"></div>
+                <div class="hero-content">
+                    <div class="hero-image-wrap">
+                        <div class="hero-image">
+                            <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MORNSUN DC/DC Converter">
+                                <defs>
+                                    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#f0d060"/>
+                                        <stop offset="100%" stop-color="#b8962e"/>
+                                    </linearGradient>
+                                    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" stop-color="#2a2a4a"/>
+                                        <stop offset="100%" stop-color="#16162e"/>
+                                    </linearGradient>
+                                    <linearGradient id="pinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" stop-color="#f0d060"/>
+                                        <stop offset="100%" stop-color="#9c7c1e"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Pins -->
+                                <g fill="url(#pinGrad)">
+                                    <rect x="30" y="30" width="8" height="34" rx="2"/>
+                                    <rect x="52" y="30" width="8" height="34" rx="2"/>
+                                    <rect x="74" y="30" width="8" height="34" rx="2"/>
+                                    <rect x="30" y="196" width="8" height="34" rx="2"/>
+                                    <rect x="52" y="196" width="8" height="34" rx="2"/>
+                                    <rect x="74" y="196" width="8" height="34" rx="2"/>
+                                    <rect x="318" y="30" width="8" height="34" rx="2"/>
+                                    <rect x="340" y="30" width="8" height="34" rx="2"/>
+                                    <rect x="362" y="30" width="8" height="34" rx="2"/>
+                                    <rect x="318" y="196" width="8" height="34" rx="2"/>
+                                    <rect x="340" y="196" width="8" height="34" rx="2"/>
+                                    <rect x="362" y="196" width="8" height="34" rx="2"/>
+                                </g>
+                                <!-- Module Body -->
+                                <rect x="90" y="55" width="220" height="150" rx="10" fill="url(#bodyGrad)" stroke="url(#goldGrad)" stroke-width="3"/>
+                                <!-- Branding -->
+                                <rect x="110" y="70" width="180" height="95" rx="6" fill="none" stroke="rgba(240,208,96,0.35)" stroke-width="1.5"/>
+                                <text x="200" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="url(#goldGrad)">ALTRÖ TECH</text>
+                                <text x="200" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#f0d060">DC-DC CONVERTER</text>
+                                <text x="200" y="140" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#b0b0c0">MORNSUN Series</text>
+                                <!-- Efficiency Badge -->
+                                <circle cx="290" cy="85" r="16" fill="url(#goldGrad)"/>
+                                <text x="290" y="89" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#1a1a1a">96%</text>
+                                <!-- Power LED indicators -->
+                                <circle cx="120" cy="185" r="5" fill="#3fae6a"/>
+                                <circle cx="140" cy="185" r="5" fill="#3fae6a"/>
+                                <text x="200" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f0d060">2:1 Wide Input</text>
+                                <!-- Bolt icon -->
+                                <text x="200" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#f0d060">⚡</text>
+                            </svg>
+                        </div>
+                        <div class="hero-image-badge">MORNSUN DC/DC Converters</div>
+                    </div>
+                    <h1>Power Solutions for Modern Industries</h1>
+                    <p id="heroTagline">Advanced DC/DC Converters and Power Conversion Solutions<span class="typewriter-cursor"></span></p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" onclick="showPage('products')">Explore Products</button>
+                        <button class="btn btn-secondary" onclick="showPage('contact')">Get in Touch</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section container scroll-animate">
+                <h2 class="section-title">Why Choose AltroTech?</h2>
+                <div class="cards-grid">
+                    <div class="card scroll-animate stagger-1">
+                        <div class="card-icon">🎯</div>
+                        <h3>High Reliability</h3>
+                        <p>Premium quality converters designed for long-term operational stability and minimal downtime.</p>
+                    </div>
+                    <div class="card scroll-animate stagger-2">
+                        <div class="card-icon">⚡</div>
+                        <h3>Maximum Efficiency</h3>
+                        <p>Industry-leading efficiency ratings up to 96%, reducing power consumption and operational costs.</p>
+                    </div>
+                    <div class="card scroll-animate stagger-3">
+                        <div class="card-icon">🔒</div>
+                        <h3>Comprehensive Support</h3>
+                        <p>Dedicated technical team providing guidance, installation support, and after-sales service.</p>
+                    </div>
+                    <div class="card scroll-animate stagger-4">
+                        <div class="card-icon">🌍</div>
+                        <h3>Wide Application Range</h3>
+                        <p>Solutions for industrial automation, telecom, medical, renewable energy, and embedded systems.</p>
+                    </div>
+                    <div class="card scroll-animate stagger-5">
+                        <div class="card-icon">✓</div>
+                        <h3>Certified Quality</h3>
+                        <p>All products meet international standards and certifications for quality and safety.</p>
+                    </div>
+                    <div class="card scroll-animate stagger-6">
+                        <div class="card-icon">💼</div>
+                        <h3>Professional Service</h3>
+                        <p>Expert consultation to find the perfect power solution for your specific requirements.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-white);">
+                <div class="section container">
+                    <h2 class="section-title scroll-animate">Our Impact</h2>
+                    <div class="stats-container">
+                        <div class="stat-box scroll-animate-scale stagger-1">
+                            <div class="stat-number" data-target="500">0</div>
+                            <div class="stat-label">Clients Worldwide</div>
+                        </div>
+                        <div class="stat-box scroll-animate-scale stagger-2">
+                            <div class="stat-number" data-target="1000">0</div>
+                            <div class="stat-label">Projects Completed</div>
+                        </div>
+                        <div class="stat-box scroll-animate-scale stagger-3">
+                            <div class="stat-number" data-target="15">0</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-box scroll-animate-scale stagger-4">
+                            <div class="stat-number" data-target="99.8">0</div>
+                            <div class="stat-label">Customer Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="hero" style="padding: 60px 20px 40px;">
+                <div class="hero-content">
+                    <h1>About AltroTech</h1>
+                    <p>Leading Provider of Industrial Power Solutions</p>
+                </div>
+            </div>
+
+            <div class="section container">
+                <div class="about-container scroll-animate">
+                    <div class="about-image scroll-animate-left">⚙️</div>
+                    <div class="about-text scroll-animate-right">
+                        <h2>Our Mission</h2>
+                        <p style="font-weight: 600; color: var(--royal-gold); margin-bottom: 20px;">Hello Sir/Ma'am,</p>
+                        <p>AltroTech is a company that provides reliable and high-quality power conversion solutions with a focus on <strong>MORNSUN DC/DC Converters</strong>. We help industries and businesses find the right power modules for their electronic and industrial applications. Our product range includes isolated and non-isolated DC/DC converters, AC/DC power supplies, I/O modules, signal conditioning modules, and other industrial power solutions designed to deliver high efficiency, reliability, and long operational life.</p>
+                    </div>
+                </div>
+
+                <div class="scroll-animate" style="margin: 60px 0;">
+                    <h2 style="font-size: 28px; margin-bottom: 30px;">Our Solutions & Applications</h2>
+                    <p style="color: var(--text-light); margin-bottom: 20px;">Our solutions are widely used in:</p>
+                    <ul class="features-list" style="columns: 2;">
+                        <li>Industrial Automation</li>
+                        <li>Telecommunications</li>
+                        <li>Medical Equipment</li>
+                        <li>Renewable Energy Systems</li>
+                        <li>Transportation</li>
+                        <li>Security Systems</li>
+                        <li>Embedded Electronics</li>
+                        <li>Power Distribution</li>
+                    </ul>
+                </div>
+
+                <div class="scroll-animate" style="background: var(--bg-light); padding: 40px; border-radius: 12px; margin: 40px 0;">
+                    <h2 style="font-size: 28px; margin-bottom: 25px;">Our Commitment</h2>
+                    <p style="color: var(--text-light); margin-bottom: 15px;">We aim to provide customers with genuine products, technical guidance, and dependable support so they can select the most suitable solution for their specific requirements. At AltroTech, our goal is to deliver quality products, professional service, and reliable power solutions that help customers improve the performance and efficiency of their systems while ensuring safety and long-term reliability.</p>
+                    <p style="color: var(--text-light);">We are committed to continuous innovation and improvement, ensuring that our customers always have access to the latest and most advanced power conversion technologies available in the industry.</p>
+                </div>
+
+                <div class="cards-grid" style="margin-top: 50px;">
+                    <div class="card scroll-animate stagger-1">
+                        <h3>🎓 Expertise</h3>
+                        <p>15+ years of industry experience and technical excellence in power conversion solutions.</p>
+                    </div>
+                    <div class="card scroll-animate stagger-2">
+                        <h3>🌟 Quality Assured</h3>
+                        <p>All products undergo rigorous testing and meet international quality standards.</p>
+                    </div>
+                    <div class="card scroll-animate stagger-3">
+                        <h3>🤝 Customer First</h3>
+                        <p>Dedicated to understanding and exceeding customer expectations with personalized solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Page -->
+        <div id="products" class="page">
+            <div class="hero" style="padding: 60px 20px 40px;">
+                <div class="hero-content">
+                    <h1>Our Products</h1>
+                    <p>Comprehensive Range of Power Conversion Solutions</p>
+                </div>
+            </div>
+
+            <div class="section container">
+                <h2 class="section-title scroll-animate">Power & Electronics Catalog</h2>
+                
+                <!-- Search & Category Filters -->
+                <div class="catalog-controls scroll-animate">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Search converters, modules, specs..." oninput="handleProductSearch(event)">
+                    </div>
+                    <div class="category-tabs">
+                        <button class="cat-btn active" onclick="filterCategory('all', this)">All</button>
+                        <button class="cat-btn" onclick="filterCategory('dcdc', this)">DC/DC Converters</button>
+                        <button class="cat-btn" onclick="filterCategory('acdc', this)">AC/DC Supplies</button>
+                        <button class="cat-btn" onclick="filterCategory('io', this)">I/O Modules</button>
+                        <button class="cat-btn" onclick="filterCategory('signal', this)">Signal Conditioning</button>
+                        <button class="cat-btn" onclick="filterCategory('industrial', this)">Industrial Units</button>
+                    </div>
+                </div>
+
+                <div class="cards-grid" id="productsGrid">
+                    <!-- Products dynamically rendered by altrotech-website.js -->
+                </div>
+
+                <div class="payment-section" style="margin-top: 50px;">
+                    <div class="payment-content">
+                        <h2>Need Custom Solutions?</h2>
+                        <p>We offer customized power conversion solutions tailored to your specific requirements.</p>
+                        <button class="btn btn-secondary" onclick="showPage('contact')">Request Custom Quote</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Page -->
+        <div id="payment" class="page">
+            <div class="hero" style="padding: 60px 20px 40px;">
+                <div class="hero-content">
+                    <h1>Secure Payment Gateway</h1>
+                    <p>Multiple Payment Options for Your Convenience</p>
+                </div>
+            </div>
+
+            <div class="section container">
+                <h2 class="section-title scroll-animate">Payment Methods</h2>
+                
+                <div class="scroll-animate" style="margin-bottom: 60px;">
+                    <p style="text-align: center; color: var(--text-light); font-size: 18px; margin-bottom: 40px;">
+                        We offer secure and convenient payment options for all your purchases
+                    </p>
+
+                    <div class="cards-grid">
+                        <div class="card scroll-animate stagger-1" style="cursor: pointer; border-top: 4px solid var(--accent-color);" onclick="openPaymentOptionModal('stripe')">
+                            <div class="card-icon">💳</div>
+                            <h3>Credit & Debit Card</h3>
+                            <p>Secure payment using Stripe. Accepts Visa, Mastercard, American Express, and more.</p>
+                            <div style="margin-top: 20px; color: var(--royal-gold); font-weight: 600;">Click to Pay →</div>
+                        </div>
+
+                        <div class="card scroll-animate stagger-2" style="cursor: pointer; border-top: 4px solid var(--accent-color);" onclick="openPaymentOptionModal('razorpay')">
+                            <div class="card-icon">🏦</div>
+                            <h3>UPI & Bank Transfer</h3>
+                            <p>Indian payment methods powered by Razorpay. Support for UPI, Net Banking, and Wallet.</p>
+                            <div style="margin-top: 20px; color: var(--royal-gold); font-weight: 600;">Click to Pay →</div>
+                        </div>
+
+                        <div class="card scroll-animate stagger-3" style="cursor: pointer; border-top: 4px solid #FF6B6B;" onclick="openPaymentOptionModal('paypal')">
+                            <div class="card-icon">🌐</div>
+                            <h3>PayPal</h3>
+                            <p>International payment solution. Secure and widely accepted worldwide.</p>
+                            <div style="margin-top: 20px; color: var(--royal-gold); font-weight: 600;">Click to Pay →</div>
+                        </div>
+
+                        <div class="card scroll-animate stagger-4" style="cursor: pointer; border-top: 4px solid #34A853;" onclick="openPaymentOptionModal('crypto')">
+                            <div class="card-icon">₿</div>
+                            <h3>Cryptocurrency</h3>
+                            <p>Pay with Bitcoin, Ethereum, and other major cryptocurrencies securely.</p>
+                            <div style="margin-top: 20px; color: var(--royal-gold); font-weight: 600;">Click to Pay →</div>
+                        </div>
+
+                        <div class="card scroll-animate stagger-5" style="cursor: pointer; border-top: 4px solid #9C27B0;" onclick="openPaymentOptionModal('wallet')">
+                            <div class="card-icon">📱</div>
+                            <h3>Digital Wallets</h3>
+                            <p>Google Pay, Apple Pay, Samsung Pay for quick and convenient checkout.</p>
+                            <div style="margin-top: 20px; color: var(--royal-gold); font-weight: 600;">Click to Pay →</div>
+                        </div>
+
+                        <div class="card scroll-animate stagger-6" style="cursor: pointer; border-top: 4px solid #FF9800;" onclick="openPaymentOptionModal('bank')">
+                            <div class="card-icon">🏛️</div>
+                            <h3>Direct Bank Transfer</h3>
+                            <p>Transfer directly from your bank account. Lowest fees and maximum security.</p>
+                            <div style="margin-top: 20px; color: var(--royal-gold); font-weight: 600;">Click to Pay →</div>
+                        </div>
+                    </div>
+                </div>
+
+<div style="background: var(--bg-hero-gradient); color: var(--hero-text); padding: 50px; border-radius: 12px; margin-bottom: 40px; border: 1px solid var(--border-color);">
+                    <h2 style="font-size: 28px; margin-bottom: 20px; color: var(--hero-text);">🔒 Security Guarantee</h2>
+                    <ul style="list-style: none; font-size: 16px; line-height: 2; color: var(--hero-subtext);">
+                        <li>✓ 256-bit SSL Encryption for all transactions</li>
+                        <li>✓ PCI DSS Level 1 Compliant</li>
+                        <li>✓ Fraud Detection & Protection</li>
+                        <li>✓ Money-back Guarantee</li>
+                        <li>✓ 24/7 Payment Support</li>
+                    </ul>
+                </div>
+
+                <div style="background: var(--bg-light); padding: 40px; border-radius: 12px; margin-bottom: 40px;">
+                    <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--text-dark);">Frequently Asked Questions</h3>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--royal-gold); margin-bottom: 10px;">Is my payment information secure?</h4>
+                        <p style="color: var(--text-light);">Yes, we use industry-leading encryption and security protocols. Your payment information is never stored on our servers and is processed through secure payment gateways.</p>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--royal-gold); margin-bottom: 10px;">What payment methods do you accept?</h4>
+                        <p style="color: var(--text-light);">We accept credit cards, debit cards, bank transfers, digital wallets, UPI, cryptocurrency, and more. Choose what's most convenient for you.</p>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--royal-gold); margin-bottom: 10px;">What is your refund policy?</h4>
+                        <p style="color: var(--text-light);">We offer a 30-day money-back guarantee if you're not satisfied with your purchase. Contact our support team for assistance.</p>
+                    </div>
+
+                    <div style="margin-bottom: 25px;">
+                        <h4 style="color: var(--royal-gold); margin-bottom: 10px;">Do you offer installment payments?</h4>
+                        <p style="color: var(--text-light);">Yes! Select payment methods support EMI options. Check during checkout for available installment plans.</p>
+                    </div>
+
+                    <div>
+                        <h4 style="color: var(--royal-gold); margin-bottom: 10px;">How quickly will my payment be processed?</h4>
+                        <p style="color: var(--text-light);">Most payments are processed instantly. You'll receive a confirmation email immediately after successful payment.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 50px;">
+                    <h3 style="font-size: 24px; margin-bottom: 20px;">Ready to Make a Payment?</h3>
+                    <button class="btn btn-primary" onclick="document.querySelector('.cards-grid').scrollIntoView({behavior: 'smooth'})">View Payment Options</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="hero" style="padding: 60px 20px 40px;">
+                <div class="hero-content">
+                    <h1>Get in Touch</h1>
+                    <p>We're here to help with your power solution needs</p>
+                </div>
+            </div>
+
+            <div class="section container">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-bottom: 60px;">
+                    <div>
+                        <h2 style="font-size: 28px; margin-bottom: 30px;">Contact Information</h2>
+                        <div style="margin-bottom: 30px;">
+                            <h4 style="font-size: 18px; color: var(--royal-gold); margin-bottom: 10px;">📍 Address</h4>
+                            <p style="color: var(--text-light);">AltroTech Solutions<br>Industrial Park, Tech City<br>Jaipur, Rajasthan 302022<br>India</p>
+                        </div>
+                        <div style="margin-bottom: 30px;">
+                            <h4 style="font-size: 18px; color: var(--royal-gold); margin-bottom: 10px;">📞 Phone</h4>
+                            <p style="color: var(--text-light);">+91 (141) 500-1234<br>+91 (141) 500-1235</p>
+                        </div>
+                        <div style="margin-bottom: 30px;">
+                            <h4 style="font-size: 18px; color: var(--royal-gold); margin-bottom: 10px;">✉️ Email</h4>
+                            <p style="color: var(--text-light);">info@altrotech.com<br>sales@altrotech.com<br>support@altrotech.com</p>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 18px; color: var(--royal-gold); margin-bottom: 10px;">🕐 Business Hours</h4>
+                            <p style="color: var(--text-light);">Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 2:00 PM<br>Sunday: Closed</p>
+                        </div>
+                    </div>
+
+                    <form class="contact-form" onsubmit="submitContact(event)">
+                        <div class="success-message" id="successMessage">Thank you! Your message has been sent successfully. We'll get back to you soon.</div>
+                        
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About AltroTech</h4>
+                <p>Leading provider of industrial power conversion solutions and MORNSUN DC/DC converters.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a onclick="showPage('home')">Home</a></li>
+                    <li><a onclick="showPage('about')">About Us</a></li>
+                    <li><a onclick="showPage('products')">Products</a></li>
+                    <li><a onclick="showPage('payment')">Payment</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a onclick="showPage('contact')">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Technical Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Warranty</a></li>
+                    <li><a href="#">Certifications</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AltroTech Solutions. All rights reserved. | Power Conversion Excellence</p>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="altrotech-website.js"></script>
+</body>
+</html>
