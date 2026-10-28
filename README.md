@@ -1,3 +1,7 @@
+🌐 Live Demo
+
+Live Website: https://manyashrivastava.github.io/altrotech-website/-here
+
 ⚡ ALTROTECH — Power Conversion & Electronics Website
 A responsive corporate and product showcase website for ALTROTECH, designed to present power-conversion solutions and provide a simple e-commerce-style browsing experience. The interface includes company information, product listings, a shopping cart, account screens, payment options, and a contact section.
 Project note: This is a frontend demonstration. Account details and cart information are handled in the browser using localStorage, and checkout/payment flows are simulated. It is not connected to a production authentication service, database, or payment gateway.
@@ -42,11 +46,6 @@ Option 2: Clone with Git
 git clone <your-repository-url>
 cd altrotech-website_3
 Then open index.html in a browser.
-🌐 Live Demo
-Add your deployed website URL here after publishing it with GitHub Pages, Netlify, or Vercel:
-
-Live Website: https://your-live-demo-url-here
-Replace the placeholder above with your actual deployment URL. Do not leave it as-is when publishing the repository.
 
 🔒 Demo Limitations & Security
 - Login and sign-up are demonstration features and use browser-side storage; they are not secure production authentication.
